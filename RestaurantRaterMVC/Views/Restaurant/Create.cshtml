@@ -1,0 +1,38 @@
+﻿@model RestaurantRaterMVC.Models.RestaurantModels.RestaurantCreate
+
+@{
+    ViewData["Title"] = "Create A Restaruant";
+}
+
+<h1>Create A Restaurant</h1>
+<hr/>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-4 form-group">
+            <label asp-for="Location" class="control-label"></label>
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mt-2 form-group">
+            <input type="submit" value="Create" class="btn btn-primary form-control" />
+        </div>
+        <div class="col-md-4 mt-2 form-group">
+            <a asp-action="Index" asp-controller="Restaurant" type="submit" class="btn btn-secondary form-control">Back To List</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
