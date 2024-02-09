@@ -35,5 +35,54 @@ namespace RestaurantRaterMVC.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id) 
+        {
+            var restaurant = await _rService.GetRestaurant(id);
+            return View(restaurant);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id) 
+        {
+            //heres the problem...
+            var restaruant = await _rService.GetRestaurant(id);
+            
+            //well...we have to manually map.... to make it a "RestaurantEdit" object'
+            RestaurantEdit restaurantEdit = new RestaurantEdit
+            {
+                Id = restaruant.Id, 
+                Name = restaruant.Name,
+                Location = restaruant.Location
+            };
+
+            return View(restaurantEdit);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(RestaurantEdit model)
+        {
+            if (!ModelState.IsValid) return View(ModelState);
+
+            if (await _rService.UpdateRestaurant(model)) return RedirectToAction(nameof(Index));
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            //heres the problem...
+            var restaruant = await _rService.GetRestaurant(id!.Value);
+            return View(restaruant);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (await _rService.DeleteRestaurant(id)) return RedirectToAction(nameof(Index));
+            return View();
+        }
     }
 }

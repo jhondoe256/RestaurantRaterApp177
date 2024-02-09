@@ -1,0 +1,47 @@
+﻿@model RatingCreate
+
+@{
+    string title = "Rate A Restaurant";
+    ViewData["Title"] = title;
+}
+
+<h1>@title</h1>
+<h1 />
+
+
+<div class="row">
+    <div class="col-md-4">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="RestaurantId" class="control-label"></label>
+                @Html.DropDownListFor(r=>r.RestaurantId,Model.RestaurantOptions)
+            </div>
+            <div class="form-group">
+                <label asp-for="AtmosphereScore" class="control-label"></label>
+                <input asp-for="AtmosphereScore" class="form-control" />
+                <span asp-validation-for="AtmosphereScore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CleanlinesScore" class="control-label"></label>
+                <input asp-for="CleanlinesScore" class="form-control" />
+                <span asp-validation-for="CleanlinesScore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FoodScore" class="control-label"></label>
+                <input asp-for="FoodScore" class="form-control" />
+                <span asp-validation-for="FoodScore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Rate!" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back To List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

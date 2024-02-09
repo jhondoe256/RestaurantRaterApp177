@@ -1,0 +1,61 @@
+﻿@model RestaurantRaterMVC.Models.RestaurantModels.RestaurantDetail
+
+@{
+    ViewData["Title"] = "Restaurant";
+}
+
+<h1>Restaurant</h1>
+
+<div>
+    <h4>RestaurantDetail</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Score)
+        </dt>
+        @if(Model.Score > 0)
+        {
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Score)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AverageFoodScore)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AverageFoodScore)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AverageCleanlinessScore):
+            </dt>
+            <dd class="col-sm-10">
+                &nbsp;&nbsp;@Html.DisplayFor(model => model.AverageCleanlinessScore)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AverageAtmosphereScore)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AverageAtmosphereScore)
+            </dd>
+        }
+        else
+        {
+            <span class="text-warning">No Ratings Yet.</span>
+        }
+    </dl>
+</div>
+<div>
+    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+</div>

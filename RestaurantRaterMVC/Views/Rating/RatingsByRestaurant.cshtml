@@ -1,0 +1,42 @@
+﻿@model IEnumerable<RatingItem>
+
+@{
+    @*This is a bug!!!!!*@
+    string restaurantName = Model.FirstOrDefault(x => x.RestaurantName != null)!.RestaurantName;
+    ViewData["Title"] = restaurantName;
+}
+
+<h2>Ratings for @restaurantName</h2>
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RestaurantName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Score)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <strong>@item.RestaurantName</strong>
+            </td>
+            <td>
+                <strong>@item.Score</strong>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id" class=" mx-2 btn btn-outline-danger"> Delete Restaurant Rating</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<div>
+    <a asp-action="Index" class=" mx-2 btn btn-outline-primary"> Back To Index</a>
+
+</div>
+

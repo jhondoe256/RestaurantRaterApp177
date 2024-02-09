@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantRaterMVC.Data;
+using RestaurantRaterMVC.Models.RatingModels;
 using RestaurantRaterMVC.Models.RestaurantModels;
 using RestaurantRaterMVC.Services.Contracts;
 
@@ -25,9 +26,19 @@ namespace RestaurantRaterMVC.Services
             return await _context.SaveChangesAsync() == 1;
         }
 
-        public Task<bool> DeleteRestaurant(int id)
+        public async Task<bool> DeleteRestaurant(int id)
         {
-            throw new NotImplementedException();
+            var restaruant =
+               await
+               _context
+               .Restaurants
+              .SingleOrDefaultAsync(x => x.Id == id);
+
+            if (restaruant == null) return false;
+
+            _context.Restaurants.Remove(restaruant);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<List<RestaurantListItem>> GetAllRestaurants()
@@ -46,14 +57,46 @@ namespace RestaurantRaterMVC.Services
             return restaurants;
         }
 
-        public Task<RestaurantDetail> GetRestaurant(int id)
+        public async Task<RestaurantDetail> GetRestaurant(int id)
         {
-            throw new NotImplementedException();
+            var restaruant = await _context.Restaurants
+                .Include(r=>r.Ratings)
+                .SingleOrDefaultAsync(x=>x.Id == id);
+
+            if (restaruant == null) return new RestaurantDetail();
+            return new RestaurantDetail 
+            {
+                Id = restaruant.Id,
+                Name = restaruant.Name,
+                Location = restaruant.Location,
+                //Ratings = restaruant.Ratings.Select(r=>new RatingListItem 
+                //{
+                //    Id = r.Id,
+                //    AtmosphereScore = r.AtmosphereScore,
+                //    CleanlinesScore = r.CleanlinesScore,
+                //    FoodScore = r.FoodScore,
+                //}).ToList(),
+                Score = restaruant.Score,
+                AverageAtmosphereScore = restaruant.AverageAtmosphereScore,
+                AverageCleanlinessScore = restaruant.AverageCleanlinessScore,
+                AverageFoodScore = restaruant.AverageFoodScore
+            };
         }
 
-        public Task<bool> UpdateRestaurant(RestaurantEdit model)
+        public async Task<bool> UpdateRestaurant(RestaurantEdit model)
         {
-            throw new NotImplementedException();
+            var restaruant = 
+                await 
+                _context
+                .Restaurants
+               .SingleOrDefaultAsync(x => x.Id == model.Id);
+
+            if (restaruant == null) return false;
+
+            restaruant.Name = model.Name;
+            restaruant .Location = model.Location;
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

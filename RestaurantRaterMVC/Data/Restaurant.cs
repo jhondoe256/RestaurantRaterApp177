@@ -21,7 +21,7 @@ namespace RestaurantRaterMVC.Data
         {
             get 
             {
-                return Ratings.Select(r=>AverageFoodScore).Sum()/Ratings.Count();
+                return Math.Round(Ratings.Select(r => r.FoodScore).Sum() / Ratings.Count,2);
             }
         }
 
@@ -29,7 +29,7 @@ namespace RestaurantRaterMVC.Data
         {
             get
             {
-                return Ratings.Select(r => r.CleanlinesScore).Sum() / Ratings.Count();
+                return Math.Round(Ratings.Select(r => r.CleanlinesScore).Sum() / Ratings.Count,2);
             }
         }
 
@@ -37,7 +37,7 @@ namespace RestaurantRaterMVC.Data
         {
             get
             {
-                return Ratings.Select(r => r.AtmosphereScore).Sum() / Ratings.Count();
+                return Math.Round(Ratings.Select(r => r.AtmosphereScore).Sum() / Ratings.Count, 2);
             }
         }
 
@@ -45,7 +45,7 @@ namespace RestaurantRaterMVC.Data
         {
             get 
             {
-                return (AverageFoodScore + AverageCleanlinessScore + AverageAtmosphereScore) / 3;
+                return Math.Round((AverageFoodScore + AverageCleanlinessScore + AverageAtmosphereScore) / 3,2);
             }
         }
     }
