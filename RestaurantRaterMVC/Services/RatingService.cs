@@ -49,6 +49,7 @@ namespace RestaurantRaterMVC.Services
             {
                 Id = r.Id,
                 RestaurantName = r.Restaurant.Name,
+                RestaurantId = r.Restaurant.Id,
                 Score = r.Restaurant.Score
             }).ToListAsync();
 
@@ -80,8 +81,12 @@ namespace RestaurantRaterMVC.Services
                 .Select(r => new RatingItem
                 {
                     Id = r.Id,
+                    RestaurantId = r.Restaurant.Id,
                     RestaurantName = r.Restaurant.Name,
-                    Score = r.Restaurant.Score
+                    Score = r.Restaurant.Score,
+                    AtmosphereScore = r.Restaurant.AverageAtmosphereScore,
+                    FoodScore = r.Restaurant.AverageFoodScore,
+                    CleanlinesScore = r.CleanlinesScore
                 }).ToListAsync();
 
             return ratings;

@@ -11,10 +11,16 @@
 <table class="table table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.RestaurantName)
+            @Html.DisplayNameFor(model => model.Score)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Score)
+            @Html.DisplayNameFor(model => model.AtmosphereScore)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CleanlinesScore)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FoodScore)
         </th>
         <th></th>
     </tr>
@@ -22,12 +28,27 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                <strong>@item.RestaurantName</strong>
-            </td>
-            <td>
-                <strong>@item.Score</strong>
-            </td>
+            @if(item.Score > 0)
+            {
+                <td>
+                    <strong>@item.Score</strong>
+                </td>
+                <td>
+                    <strong>@item.AtmosphereScore</strong>
+                </td>
+                <td>
+                    <strong>@item.CleanlinesScore</strong>
+                </td>
+                <td>
+                    <strong>@item.FoodScore</strong>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <span class="text-warning">No Scores Available.</span>
+                </td>
+            }
             <td>
                 <a asp-action="Delete" asp-route-id="@item.Id" class=" mx-2 btn btn-outline-danger"> Delete Restaurant Rating</a>
             </td>
